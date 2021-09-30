@@ -13,7 +13,8 @@
   </head>
   <body>
     <% if session[:user_id].present? %>
-      <p><%= User.find(session[:user_id]).name %></p>
+      <p><%= current_user.name if current_user.present? %></p>
+      <p><%= current_user.email if current_user.present? %></p>
     <% end %>
     <%= render 'shared/navbar' %>
     <div class="container">

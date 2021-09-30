@@ -2,7 +2,7 @@ class User < ApplicationRecord
 	include BCrypt
 	validates :email, presence: true, uniqueness: { case_sensitive: false }
 	validate :password_present?
-
+	has_many :stories
 	def password
 		return nil unless password_digest.present?
 		@password ||= Password.new(password_digest)

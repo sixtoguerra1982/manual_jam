@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def show
-
+    @stories = @user.stories
   end
 
   def destroy_session
