@@ -75,10 +75,10 @@ class StoriesController < ApplicationController
     end
 
     def check_sign_in
-      redirect_to root_path , notice: 'Acceso no Autorizado'  if !helpers.logged?
+      redirect_to root_path , alert: 'Acceso no Autorizado'  if !helpers.logged?
     end
 
     def check_owner
-      redirect_to root_path , notice: 'Acceso no Autorizado'  if @story.user != helpers.current_user
+      redirect_to root_path , alert: 'Acceso no Autorizado'  if @story.user != helpers.current_user
     end
 end
