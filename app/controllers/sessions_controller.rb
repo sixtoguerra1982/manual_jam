@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  include BCrypt
   def new
 
   end

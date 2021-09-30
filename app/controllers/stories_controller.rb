@@ -1,6 +1,7 @@
 class StoriesController < ApplicationController
   before_action :set_story, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_sign_in, except: [:index]
+  before_action :check_owner, only: [:edit, :update ,:destroy]
   # GET /stories
   # GET /stories.json
   def index
@@ -25,12 +26,7 @@ class StoriesController < ApplicationController
   # POST /stories.json
   def create
     @story = Story.new(story_params)
-    byebug
-    if session[:user_id].present?
-      @user = User.find(session[:user_id])
-      @story.user = @user
-    end
-
+    @story.user = helpers.current_user if helpers.logged?
     # @story.user = current_user
     respond_to do |format|
       if @story.save
@@ -76,5 +72,13 @@ class StoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def story_params
       params.require(:story).permit(:title, :picture, :content)
+    end
+
+    def check_sign_in
+      redirect_to root_path , notice: 'Acceso no Autorizado'  if !helpers.logged?
+    end
+
+    def check_owner
+      redirect_to root_path , notice: 'Acceso no Autorizado'  if @story.user != helpers.current_user
     end
 end
